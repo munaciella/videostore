@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
+import SearchInput from "./SearchInput";
+import GenreDropdown from "./GenreDropdown";
 
 const Header = () => {
   return (
-    <header className="fixed w-full z-20 top-0 flex items-center justify-between p-5 bg-gradient-to-t from-gray-200/0 via-gray-900/25 to-gray-900/0">
+    <header className="fixed w-full z-20 top-0 flex items-center justify-between p-5 bg-gradient-to-t from-gray-200/0 via-gray-900/25 to-gray-900">
       {/* Logo */}
       <Link href="/" className="flex items-center mr-10">
         <Image
@@ -19,6 +21,8 @@ const Header = () => {
 
       {/* Theme Toggle */}
       <div className="flex items-center space-x-2">
+        <GenreDropdown />
+        <SearchInput />
         <ThemeToggle />
       </div>
     </header>

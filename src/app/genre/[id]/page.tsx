@@ -6,8 +6,10 @@ type Props = {
 }
 
 const GenrePage = ({ params: { id }, searchParams: { genre } }: Props) => {
+    const  decodedGenre = decodeURIComponent(genre);
+
   return (
-    <div>Welcome to the genre with ID: {id} and name: {genre}</div>
+    <div>Welcome to the genre with ID: {id} and name: {decodedGenre}</div>
   )
 }
 

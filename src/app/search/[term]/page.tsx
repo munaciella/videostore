@@ -7,7 +7,9 @@ type Props = {
 const SearchPage = ({ params: {term} }: Props) => {
   if (!term) return notFound();
 
-  return <div>Welcome to the search page: {term}</div>;
+  const decodedTerm = decodeURIComponent(term);
+
+  return <div>Welcome to the search page: {decodedTerm}</div>;
 };
 
 export default SearchPage;
