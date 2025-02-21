@@ -15,7 +15,7 @@ export type Movie = {
     vote_count: number;
 }
 
-export type SearcgResults = {
+export type SearchResults = {
     page: number;
     results: Movie[];
     total_pages: number;
