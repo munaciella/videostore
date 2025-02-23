@@ -6,7 +6,8 @@ import GenreDropdown from "./GenreDropdown";
 
 const Header = () => {
   return (
-    <header className="fixed w-full z-20 top-0 flex items-center justify-between p-5 bg-gradient-to-t from-gray-200/0 via-gray-900/25 to-gray-900">
+    <header className="fixed w-full z-[60] top-0 flex items-center justify-between p-5 
+  bg-gradient-to-t from-white/0 via-white/10 to-white/30 dark:from-gray-900/0 dark:via-gray-900/25 dark:to-gray-900">
       {/* Logo */}
       <Link href="/" className="flex items-center mr-10">
         <Image
@@ -19,7 +20,6 @@ const Header = () => {
         />
       </Link>
 
-      {/* Theme Toggle */}
       <div className="flex items-center space-x-2">
         <GenreDropdown />
         <SearchInput />
