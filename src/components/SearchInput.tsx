@@ -21,10 +21,9 @@ const SearchInput = () => {
     },
   });
 
-  // 2. Define a submit handler.
+  // Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
 
     router.push(`/search/${values.input}`);
@@ -40,7 +39,7 @@ const SearchInput = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Search..." {...field} />
+                <Input placeholder="Search..." {...field} className='bg-slate-200 dark:bg-slate-800 placeholder:text-gray-500 dark:placeholder:text-gray-300' />
               </FormControl>
             </FormItem>
           )}

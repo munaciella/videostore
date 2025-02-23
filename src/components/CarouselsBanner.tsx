@@ -19,7 +19,7 @@ const CarouselsBanner = ({movies}: Props ) => {
 
   return (
     <div 
-    className="overflow-hidden lg:-mt-10 relative cursor-pointer"
+    className="overflow-hidden lg:-mt-6 relative cursor-pointer"
     ref={emblaRef}
     >
         <div className="flex">
@@ -33,7 +33,7 @@ const CarouselsBanner = ({movies}: Props ) => {
                     height={1080}
                     />
 
-                    <div className="hidden lg:inline absolute mt-0 top-0 pt-40 xl:pt-52 left-0 lg:mt-10 bg-transparent z-20 h-full w-full bg-gradient-to-r from-gray-900/90 via-transparent to-transparent p-10 space-y-5 text-white">
+                    <div className="hidden lg:inline absolute mt-0 top-0 pt-40 xl:pt-52 left-0 lg:mt-6 bg-transparent z-20 h-full w-full bg-gradient-to-r from-gray-900/90 via-transparent to-transparent p-10 space-y-5 text-white">
                         <h2 className="text-5xl font-bold max-w-xl z-50">
                             {movie.title}
                         </h2>
@@ -45,7 +45,8 @@ const CarouselsBanner = ({movies}: Props ) => {
             ))}
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-200/0 via-gray-900/25 to-gray-300 dark:to-[#1A1C29]" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-gray-200/0 via-gray-900/25 to-gray-300 dark:to-[#1A1C29]" /> */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-gray-100/10 to-gray-100/50 dark:to-[#1A1C29]" />
         </div>
   )
 }
