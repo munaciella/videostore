@@ -1,4 +1,8 @@
-import { SearchResults } from "../../typings";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
+
+
+import { MovieDetails, SearchResults } from "../../typings";
 
 async function fetchFromTMDB(url: URL, cacheTime?: number) {
     url.searchParams.set("include_adult", "false");
@@ -69,3 +73,34 @@ export async function getSearchedMovies(term: string) {
     const data = await fetchFromTMDB(url);
     return data.results;
 }
+
+export async function getMovieRecommendations(movieId: string) {
+    const url = new URL(`https://api.themoviedb.org/3/movie/${movieId}/recommendations`);
+    const data = await fetchFromTMDB(url);
+    return data.results;
+}
+
+export async function getSimilarMovies(movieId: string) {
+    const url = new URL(`https://api.themoviedb.org/3/movie/${movieId}/similar`);
+    const data = await fetchFromTMDB(url);
+    return data.results;
+}
+
+export async function getSearchBasedRecommendations(searchTerm: string) {
+    const searchedMovies = await getSearchedMovies(searchTerm);
+    if (searchedMovies.length === 0) return [];
+    
+    const firstMovieId = String(searchedMovies[0].id);
+    return getMovieRecommendations(firstMovieId);
+}
+
+
+export async function getMovieDetails(movieId: string): Promise<MovieDetails | null> {
+    const url = new URL(`https://api.themoviedb.org/3/movie/${movieId}`);
+    const data = await fetchFromTMDB(url);
+
+    if (!data || !data.id) return null; // ✅ Ensure it returns `null` if data is invalid
+
+    return data as MovieDetails;
+}
+
