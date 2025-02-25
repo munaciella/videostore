@@ -6,8 +6,9 @@ type Props = {
   title?: string;
   movies: Movie[];
   isVertical?: boolean;
+  onRemove?: (id: string) => void;
 };
-const MoviesCarousel = ({ title, movies, isVertical }: Props) => {
+const MoviesCarousel = ({ title, movies, isVertical, onRemove }: Props) => {
   return (
     <div className="z-0">
       <h2 className="text-xl font-bold px-10 py-2">{title}</h2>
@@ -27,7 +28,7 @@ const MoviesCarousel = ({ title, movies, isVertical }: Props) => {
                     'flex flex-col space-y-5 items-center lg:flex-row space-x-5'
                 )}
               >
-                <MovieCard movie={movie} />
+                <MovieCard movie={movie} onRemove={onRemove} />
                 <div className="max-w-2xl">
                   <p className="font-bold">
                     {movie.title} ({movie.release_date?.split('-')[0]})
@@ -37,7 +38,7 @@ const MoviesCarousel = ({ title, movies, isVertical }: Props) => {
                 </div>
               </div>
             ))
-          : movies?.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+          : movies?.map((movie) => <MovieCard key={movie.id} movie={movie} onRemove={onRemove} />)}
       </div>
     </div>
   );
