@@ -1,26 +1,3 @@
-// import CarouselBannerWrapper from "@/components/CarouselBannerWrapper";
-// import MoviesCarousel from "@/components/MoviesCarousel";
-// import { getPopularMovies, getTopRatedMovies, getUpcomingMovies } from "@/lib/getMovies";
-
-// export default async function Home() {
-
-//   const upcomingMovies = await getUpcomingMovies();
-//   const topRatedMovies = await getTopRatedMovies();
-//   const popularMovies = await getPopularMovies();
-
-//   return (
-//       <main>
-//         <CarouselBannerWrapper />
-
-//         <div className="flex flex-col space-y-2 mt-6">
-//           <MoviesCarousel movies={upcomingMovies} title="Upcoming" />
-//           <MoviesCarousel movies={topRatedMovies} title="Top Rated" />
-//           <MoviesCarousel movies={popularMovies} title="Popular" />
-//         </div>
-//     </main>
-//   );
-// }
-
 import CarouselBannerWrapper from "@/components/CarouselBannerWrapper";
 import MoviesCarousel from "@/components/MoviesCarousel";
 import { 
@@ -30,14 +7,13 @@ import {
   getMovieRecommendations, 
   getSimilarMovies 
 } from "@/lib/getMovies";
-import { Movie } from "../../typings"; // ✅ Ensure correct type import
+import { Movie } from "../../typings";
 
 export default async function Home() {
   const upcomingMovies: Movie[] = await getUpcomingMovies();
   const topRatedMovies: Movie[] = await getTopRatedMovies();
   const popularMovies: Movie[] = await getPopularMovies();
 
-  // ✅ Pick a random popular movie for recommendations (convert to string)
   const featuredMovieId: string | null = 
     popularMovies.length > 0 ? String(popularMovies[0].id) : null;
 
