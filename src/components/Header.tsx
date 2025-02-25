@@ -26,9 +26,14 @@ const Header = () => {
         <SearchInput />
         <ThemeToggle />
 
-        
-        {/* If Signed In, Show Avatar */}
+        {/* If Signed In, Show "My List" + Avatar */}
         <SignedIn>
+          <Link
+            href="/profile"
+            className="text-black dark:text-gray-100 font-semibold px-4 py-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+          >
+            My List
+          </Link>
           <UserButton afterSignOutUrl="/" />
         </SignedIn>
 
@@ -36,7 +41,6 @@ const Header = () => {
         <SignedOut>
           <SignInButton />
         </SignedOut>
-
       </div>
     </header>
   );
