@@ -10,9 +10,12 @@ type Props = {
 };
 
 export default async function MoviePage({ params }: Props) {
+  console.log("Fetching movie details for ID:", params.id);
   const movie: MovieDetails | null = await getMovieDetails(params.id);
-  if (!movie) return notFound();
-
+  if (!movie) {
+    console.error("❌ Movie not found for ID:", params.id);
+    return notFound();
+  }
   // Fetch AI-powered recommendations
   const recommendedMovies: Movie[] = await getMovieRecommendations(params.id);
   const similarMovies: Movie[] = await getSimilarMovies(params.id);

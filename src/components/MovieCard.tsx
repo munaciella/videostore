@@ -23,6 +23,7 @@ const MovieCard = ({ movie, onRemove }: { movie: Movie; onRemove?: (id: string) 
   // ✅ Handle Save/Remove Movie
   const handleSaveMovie = async (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation(); // ✅ Prevents interfering with navigation
 
     if (!user) {
       toast.error("You must be signed in to save movies!");
@@ -44,20 +45,16 @@ const MovieCard = ({ movie, onRemove }: { movie: Movie; onRemove?: (id: string) 
 
   return (
     <div className="relative flex-shrink-0 cursor-pointer transform hover:scale-105 transition duration-200 ease-out hover:drop-shadow-lg">
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-100/5 via-gray-200/5 to-gray-200/20 dark:to-[#1A1C29]/80 z-10" />
+      <Link href={`/movie/${movieId}`} className="block w-full h-full">
+        {/* Overlay for Text Visibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-100/5 via-gray-200/5 to-gray-200/20 dark:to-[#1A1C29]/80 z-10" />
+        
+        {/* Movie Title */}
+        <p className="absolute z-20 bottom-5 left-5 text-white font-semibold text-md">
+          {movie.title}
+        </p>
 
-      <p className="absolute z-20 bottom-5 left-5 text-white font-semibold text-md">
-        {movie.title}
-      </p>
-
-      <button
-        onClick={handleSaveMovie}
-        className="absolute top-3 right-3 bg-black/50 text-white text-xs px-3 py-1 rounded-md backdrop-blur-sm z-30 hover:bg-black/70 transition"
-      >
-        {saved ? "Remove" : "Save"}
-      </button>
-
-      <Link href={`/movie/${movieId}`}>
+        {/* Movie Image */}
         <Image
           className="w-fit lg:min-w-[400px] h-56 object-cover object-center shadow-md shadow-gray-900 drop-shadow-xl rounded-sm"
           src={getImagePath(movie.backdrop_path || movie.poster_path)}
@@ -67,6 +64,14 @@ const MovieCard = ({ movie, onRemove }: { movie: Movie; onRemove?: (id: string) 
           key={movie.id}
         />
       </Link>
+
+      {/* ✅ Move Save/Remove Button OUTSIDE <Link> */}
+      <button
+        onClick={handleSaveMovie}
+        className="absolute top-3 right-3 bg-black/50 text-white text-xs px-3 py-1 rounded-md backdrop-blur-sm z-30 hover:bg-black/70 transition"
+      >
+        {saved ? "Remove" : "Save"}
+      </button>
     </div>
   );
 };
