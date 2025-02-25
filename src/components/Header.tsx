@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import SearchInput from "./SearchInput";
 import GenreDropdown from "./GenreDropdown";
+import { SignedIn, SignedOut, UserButton, SignInButton } from "@clerk/nextjs";
 
 const Header = () => {
   return (
@@ -20,10 +21,22 @@ const Header = () => {
         />
       </Link>
 
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-4">
         <GenreDropdown />
         <SearchInput />
         <ThemeToggle />
+
+        
+        {/* If Signed In, Show Avatar */}
+        <SignedIn>
+          <UserButton afterSignOutUrl="/" />
+        </SignedIn>
+
+        {/* If Signed Out, Show Sign In Button */}
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+
       </div>
     </header>
   );
