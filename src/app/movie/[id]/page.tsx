@@ -1,20 +1,26 @@
-import { getMovieDetails, getMovieRecommendations, getMovieTrailer, getSimilarMovies, getStreamingProviders } from "@/lib/getMovies";
-import MoviesCarousel from "@/components/MoviesCarousel";
-import Image from "next/image";
-import getImagePath from "@/lib/getImagePath";
-import { notFound } from "next/navigation";
-import { Movie, MovieDetails, StreamingProvider } from "../../../../typings";
-import TrailerModal from "@/components/TrailerModal";
+import {
+  getMovieDetails,
+  getMovieRecommendations,
+  getMovieTrailer,
+  getSimilarMovies,
+  getStreamingProviders,
+} from '@/lib/getMovies';
+import MoviesCarousel from '@/components/MoviesCarousel';
+import Image from 'next/image';
+import getImagePath from '@/lib/getImagePath';
+import { notFound } from 'next/navigation';
+import { Movie, MovieDetails, StreamingProvider } from '../../../../typings';
+import TrailerModal from '@/components/TrailerModal';
 
 type Props = {
   params: { id: string };
 };
 
 export default async function MoviePage({ params }: Props) {
-  console.log("Fetching movie details for ID:", params.id);
+  console.log('Fetching movie details for ID:', params.id);
   const movie: MovieDetails | null = await getMovieDetails(params.id);
   if (!movie) {
-    console.error("❌ Movie not found for ID:", params.id);
+    console.error('❌ Movie not found for ID:', params.id);
     return notFound();
   }
   // Fetch AI-powered recommendations
@@ -24,10 +30,12 @@ export default async function MoviePage({ params }: Props) {
   const trailerUrl = await getMovieTrailer(params.id);
 
   // ✅ Fetch streaming platforms
-  const streamingProviders: StreamingProvider[] = await getStreamingProviders(params.id);
+  const streamingProviders: StreamingProvider[] = await getStreamingProviders(
+    params.id
+  );
 
   // ✅ Ensure image path is never `null`
-  const movieImage = movie.backdrop_path || movie.poster_path || "";
+  const movieImage = movie.backdrop_path || movie.poster_path || '';
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -67,40 +75,60 @@ export default async function MoviePage({ params }: Props) {
 
         {/* Movie Details */}
         <div className="text-sm text-gray-500 px-10">
-          {movie.release_date && <p><strong>Release Date:</strong> {movie.release_date}</p>}
-          <p><strong>Rating:</strong> {movie.vote_average.toFixed(1)}/10</p>
+          {movie.release_date && (
+            <p>
+              <strong>Release Date:</strong> {movie.release_date}
+            </p>
+          )}
+          <p>
+            <strong>Rating:</strong> {movie.vote_average.toFixed(1)}/10
+          </p>
           {movie.genres && movie.genres.length > 0 && (
             <p>
-              <strong>Genres:</strong> {movie.genres.map((g) => g.name).join(", ")}
+              <strong>Genres:</strong>{' '}
+              {movie.genres.map((g) => g.name).join(', ')}
             </p>
           )}
         </div>
 
         {/* ✅ Streaming Platforms */}
-        {streamingProviders.length > 0 && (
-          <div className="px-10">
-            <h2 className="text-2xl font-bold mt-6">Available on:</h2>
-            <div className="flex flex-col gap-4 mt-3">
-              {streamingProviders.map((provider) => (
-                <div key={provider.provider_id} className="flex items-center space-x-2">
-                  <Image
-                    src={`https://image.tmdb.org/t/p/w500${provider.logo_path}`}
-                    alt={provider.provider_name}
-                    width={50}
-                    height={50}
-                    className="rounded-md shadow-md"
-                  />
-                  <p>{provider.provider_name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+{streamingProviders.length > 0 && movie.id && (
+  <div className="px-10">
+    <h2 className="text-2xl font-bold mt-6">Available on:</h2>
+    <div className="flex flex-col gap-4 mt-3">
+      {streamingProviders.map((provider) => {
+        // 🔗 Construct TMDB's watch page URL for the movie
+        const providerUrl = `https://www.themoviedb.org/movie/${movie.id}/watch`;
 
+        return (
+          <a
+            key={provider.provider_id}
+            href={providerUrl} // ✅ TMDB Watch Page
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center space-x-2 hover:opacity-80 transition"
+          >
+            <Image
+              src={`https://image.tmdb.org/t/p/w500${provider.logo_path}`}
+              alt={provider.provider_name}
+              width={50}
+              height={50}
+              className="rounded-md shadow-md"
+            />
+            <p className="text-blue-500 underline">{provider.provider_name}</p>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+)}
 
         {/* AI Recommendations */}
         {recommendedMovies.length > 0 && (
-          <MoviesCarousel title="Recommended for You" movies={recommendedMovies} />
+          <MoviesCarousel
+            title="Recommended for You"
+            movies={recommendedMovies}
+          />
         )}
 
         {/* Similar Movies */}
