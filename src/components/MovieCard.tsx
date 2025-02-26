@@ -89,7 +89,7 @@ const MovieCard = ({
 
         {/* Movie Image */}
         <Image
-          className="w-fit lg:min-w-[400px] h-56 object-cover object-center shadow-md shadow-gray-900 drop-shadow-xl rounded-sm"
+          className="w-fit lg:min-w-[400px] h-56 object-cover object-center shadow-md shadow-gray-900 drop-shadow-md rounded-sm"
           src={getImagePath(movie.backdrop_path || movie.poster_path)}
           alt={movie.title}
           width={1920}
