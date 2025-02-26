@@ -153,6 +153,7 @@ import { Button } from "@/components/ui/button";
 export default function ProfilePage() {
   const { user, isLoaded } = useUser();
   const [savedMovies, setSavedMovies] = useState<Movie[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [sortOption, setSortOption] = useState("release_date");
   const [filterWatched, setFilterWatched] = useState<boolean | null>(null);
 
