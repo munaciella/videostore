@@ -42,3 +42,9 @@ export type MovieDetails = {
   vote_average: number;
   genres: Genre[];
 };
+
+export type StreamingProvider = {
+  provider_id: number;
+  provider_name: string;
+  logo_path: string;
+};

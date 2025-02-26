@@ -1,9 +1,9 @@
-import { getMovieDetails, getMovieRecommendations, getSimilarMovies } from "@/lib/getMovies";
+import { getMovieDetails, getMovieRecommendations, getSimilarMovies, getStreamingProviders } from "@/lib/getMovies";
 import MoviesCarousel from "@/components/MoviesCarousel";
 import Image from "next/image";
 import getImagePath from "@/lib/getImagePath";
 import { notFound } from "next/navigation";
-import { Movie, MovieDetails } from "../../../../typings";
+import { Movie, MovieDetails, StreamingProvider } from "../../../../typings";
 
 type Props = {
   params: { id: string };
@@ -19,6 +19,9 @@ export default async function MoviePage({ params }: Props) {
   // Fetch AI-powered recommendations
   const recommendedMovies: Movie[] = await getMovieRecommendations(params.id);
   const similarMovies: Movie[] = await getSimilarMovies(params.id);
+
+  // ✅ Fetch streaming platforms
+  const streamingProviders: StreamingProvider[] = await getStreamingProviders(params.id);
 
   // ✅ Ensure image path is never `null`
   const movieImage = movie.backdrop_path || movie.poster_path || "";
@@ -62,6 +65,28 @@ export default async function MoviePage({ params }: Props) {
             </p>
           )}
         </div>
+
+        {/* ✅ Streaming Platforms */}
+        {streamingProviders.length > 0 && (
+          <div className="px-10">
+            <h2 className="text-2xl font-bold mt-6">Available on:</h2>
+            <div className="flex flex-col gap-4 mt-3">
+              {streamingProviders.map((provider) => (
+                <div key={provider.provider_id} className="flex items-center space-x-2">
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500${provider.logo_path}`}
+                    alt={provider.provider_name}
+                    width={50}
+                    height={50}
+                    className="rounded-md shadow-md"
+                  />
+                  <p>{provider.provider_name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
 
         {/* AI Recommendations */}
         {recommendedMovies.length > 0 && (

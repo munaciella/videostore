@@ -2,7 +2,7 @@
 // @ts-nocheck
 
 
-import { MovieDetails, SearchResults } from "../../typings";
+import { MovieDetails, SearchResults, StreamingProvider } from "../../typings";
 
 async function fetchFromTMDB(url: URL, cacheTime?: number) {
     url.searchParams.set("include_adult", "false");
@@ -104,3 +104,9 @@ export async function getMovieDetails(movieId: string): Promise<MovieDetails | n
     return data as MovieDetails;
 }
 
+export async function getStreamingProviders(movieId: string): Promise<StreamingProvider[]> {
+    const url = new URL(`https://api.themoviedb.org/3/movie/${movieId}/watch/providers`);
+    const data = await fetchFromTMDB(url);
+
+    return data.results?.GB?.flatrate || [];
+}
