@@ -7,6 +7,7 @@ type Props = {
   movies: Movie[];
   isVertical?: boolean;
   onRemove?: (id: string) => void;
+  onToggleWatched?: (id: string, watched: boolean) => void;
 };
 const MoviesCarousel = ({ title, movies, isVertical, onRemove }: Props) => {
   return (
