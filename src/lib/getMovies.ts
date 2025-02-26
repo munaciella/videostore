@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 
-
 import { MovieDetails, SearchResults, StreamingProvider } from "../../typings";
 
 async function fetchFromTMDB(url: URL, cacheTime?: number) {
@@ -110,3 +109,20 @@ export async function getStreamingProviders(movieId: string): Promise<StreamingP
 
     return data.results?.GB?.flatrate || [];
 }
+
+export async function getMovieTrailer(movieId: string): Promise<string | null> {
+    const url = new URL(`https://api.themoviedb.org/3/movie/${movieId}/videos`);
+    const data = await fetchFromTMDB(url);
+  
+    if (!data.results || data.results.length === 0) return null; // ✅ No trailer found
+  
+    // ✅ Prioritize official YouTube trailers
+    const officialTrailer = data.results.find(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (video: any) =>
+        video.site === "YouTube" &&
+        video.type === "Trailer"
+    );
+  
+    return officialTrailer ? `https://www.youtube.com/watch?v=${officialTrailer.key}` : null;
+  }

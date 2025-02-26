@@ -1,9 +1,10 @@
-import { getMovieDetails, getMovieRecommendations, getSimilarMovies, getStreamingProviders } from "@/lib/getMovies";
+import { getMovieDetails, getMovieRecommendations, getMovieTrailer, getSimilarMovies, getStreamingProviders } from "@/lib/getMovies";
 import MoviesCarousel from "@/components/MoviesCarousel";
 import Image from "next/image";
 import getImagePath from "@/lib/getImagePath";
 import { notFound } from "next/navigation";
 import { Movie, MovieDetails, StreamingProvider } from "../../../../typings";
+import TrailerModal from "@/components/TrailerModal";
 
 type Props = {
   params: { id: string };
@@ -19,6 +20,8 @@ export default async function MoviePage({ params }: Props) {
   // Fetch AI-powered recommendations
   const recommendedMovies: Movie[] = await getMovieRecommendations(params.id);
   const similarMovies: Movie[] = await getSimilarMovies(params.id);
+
+  const trailerUrl = await getMovieTrailer(params.id);
 
   // ✅ Fetch streaming platforms
   const streamingProviders: StreamingProvider[] = await getStreamingProviders(params.id);
@@ -47,6 +50,13 @@ export default async function MoviePage({ params }: Props) {
             <p className="text-center text-gray-500">No image available</p>
           )}
         </div>
+
+        {/* ✅ Trailer Button */}
+        {trailerUrl && (
+          <div className="px-10">
+            <TrailerModal trailerUrl={trailerUrl} />
+          </div>
+        )}
 
         {/* Movie Overview */}
         {movie.overview && (

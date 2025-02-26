@@ -48,3 +48,12 @@ export type StreamingProvider = {
   provider_name: string;
   logo_path: string;
 };
+
+export type MovieVideo = {
+  id: string;
+  key: string;
+  name: string;
+  site: string;
+  type: string;
+  url: string;
+};
