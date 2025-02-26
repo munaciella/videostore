@@ -1,15 +1,22 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { Movie } from "../../typings";
-import getImagePath from "@/lib/getImagePath";
-import { useUser } from "@clerk/nextjs";
-import { useState, useEffect } from "react";
-import { saveMovie, removeMovie, isMovieSaved } from "@/lib/firestore";
-import { toast } from "sonner";
+import Image from 'next/image';
+import Link from 'next/link';
+import { Movie } from '../../typings';
+import getImagePath from '@/lib/getImagePath';
+import { useUser } from '@clerk/nextjs';
+import { useState, useEffect } from 'react';
+import { saveMovie, removeMovie, isMovieSaved } from '@/lib/firestore';
+import { toast } from 'sonner';
+import { Button } from './ui/button';
 
-const MovieCard = ({ movie, onRemove }: { movie: Movie; onRemove?: (id: string) => void }) => {
+const MovieCard = ({
+  movie,
+  onRemove,
+}: {
+  movie: Movie;
+  onRemove?: (id: string) => void;
+}) => {
   const { user } = useUser();
   const [saved, setSaved] = useState(false);
   const movieId = String(movie.id);
@@ -26,7 +33,7 @@ const MovieCard = ({ movie, onRemove }: { movie: Movie; onRemove?: (id: string) 
     e.stopPropagation(); // ✅ Prevents interfering with navigation
 
     if (!user) {
-      toast.error("You must be signed in to save movies!");
+      toast.error('You must be signed in to save movies!');
       return;
     }
 
@@ -48,7 +55,7 @@ const MovieCard = ({ movie, onRemove }: { movie: Movie; onRemove?: (id: string) 
       <Link href={`/movie/${movieId}`} className="block w-full h-full">
         {/* Overlay for Text Visibility */}
         <div className="absolute inset-0 bg-gradient-to-t from-gray-100/5 via-gray-200/5 to-gray-200/20 dark:to-[#1A1C29]/80 z-10" />
-        
+
         {/* Movie Title */}
         <p className="absolute z-20 bottom-5 left-5 text-white font-semibold text-md">
           {movie.title}
@@ -66,12 +73,13 @@ const MovieCard = ({ movie, onRemove }: { movie: Movie; onRemove?: (id: string) 
       </Link>
 
       {/* ✅ Move Save/Remove Button OUTSIDE <Link> */}
-      <button
+      <Button
+        variant="destructive"
         onClick={handleSaveMovie}
         className="absolute top-3 right-3 bg-black/50 text-white text-xs px-3 py-1 rounded-md backdrop-blur-sm z-30 hover:bg-black/70 transition"
       >
-        {saved ? "Remove" : "Save"}
-      </button>
+        {saved ? 'Remove' : 'Save to My List'}
+      </Button>
     </div>
   );
 };
