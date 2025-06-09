@@ -7,8 +7,8 @@ import { dark } from '@clerk/themes';
 import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
-  title: 'Videostore',
-  description: 'The ultimate video store',
+  title: 'Streambuster',
+  description: 'The ultimate movie browser platform',
 };
 
 export default function RootLayout({
