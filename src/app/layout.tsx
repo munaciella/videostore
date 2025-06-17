@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import { Toaster } from '@/components/ui/sonner';
+import AuthBridge from '@/components/AuthBridge';
 
 export const metadata: Metadata = {
   title: 'Streambuster',
@@ -24,6 +25,7 @@ export default function RootLayout({
     >
       <html lang="en" suppressHydrationWarning>
         <body className="bg-white dark:bg-[#1A1C29]">
+          <AuthBridge />
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

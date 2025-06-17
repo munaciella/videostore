@@ -22,9 +22,7 @@ const Header = () => {
       bg-gradient-to-t from-white/0 via-white/10 to-white/30 
       dark:from-gray-900/0 dark:via-gray-900/25 dark:to-gray-900">
       
-      {/* Left Section */}
       <div className="flex items-center space-x-4">
-        {/* Mobile Menu (Only on SM) */}
         <div className="sm:block md:hidden">
           <Sheet>
             <SheetTrigger asChild>
@@ -38,15 +36,12 @@ const Header = () => {
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
 
-              {/* Search Input (Moved inside menu on SM) */}
               <div className="py-2">
                 <SearchInput />
               </div>
 
-              {/* Theme Toggle */}
               <ThemeToggle />
 
-              {/* Signed In: Show "My List" */}
               <SignedIn>
                 <Link
                   href="/profile"
@@ -56,14 +51,12 @@ const Header = () => {
                 </Link>
               </SignedIn>
 
-              {/* Signed Out: Show Sign In Button */}
               <div className="mt-2">
                 <SignedOut>
                   <SignInButton />
                 </SignedOut>
               </div>
 
-              {/* Close Button */}
               <SheetClose asChild>
                 <Button variant="outline" className="w-full mt-4">Close</Button>
               </SheetClose>
@@ -71,7 +64,6 @@ const Header = () => {
           </Sheet>
         </div>
 
-        {/* Logo (Always Visible) */}
         <Link href="/" className="flex items-center">
           <Image
           src={logo}
@@ -85,11 +77,9 @@ const Header = () => {
         </Link>
       </div>
 
-      {/* Genre Dropdown (Always Visible) + Avatar (Only Signed In) */}
       <div className="mr-4 ml-auto flex items-center space-x-4">
         <GenreDropdown />
         
-        {/* Move Avatar Outside the Sheet (Only on SM) */}
         <SignedIn>
           <div className="block sm:hidden">
             <UserButton afterSignOutUrl="/" />
@@ -97,7 +87,6 @@ const Header = () => {
         </SignedIn>
       </div>
 
-      {/* Desktop Only: Search, Theme, My List, Avatar */}
       <div className="hidden md:flex items-center space-x-4">
         <SearchInput />
         <ThemeToggle />
