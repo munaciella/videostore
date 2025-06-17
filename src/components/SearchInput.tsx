@@ -21,9 +21,7 @@ const SearchInput = () => {
     },
   });
 
-  // Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
     console.log(values);
 
     router.push(`/search/${values.input}`);

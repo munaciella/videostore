@@ -34,12 +34,10 @@ export default async function Home() {
         <MoviesCarousel movies={topRatedMovies} title="Top Rated" />
         <MoviesCarousel movies={popularMovies} title="Popular" />
 
-        {/* ✅ AI-Powered Movie Recommendations */}
         {recommendedMovies.length > 0 && (
           <MoviesCarousel movies={recommendedMovies} title="Recommended for You" />
         )}
 
-        {/* ✅ Similar Movies Section */}
         {similarMovies.length > 0 && (
           <MoviesCarousel movies={similarMovies} title="You May Also Like" />
         )}
